@@ -7,45 +7,45 @@ import 'package:dart_code_metrics/src/analyzers/lint_analyzer/models/scoped_func
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-class CompilationUnitMemberMock extends Mock {}
+class CompilationUnitMemberMock extends Mock implements CompilationUnitMember {}
 
-class DeclarationMock extends Mock {}
+class DeclarationMock extends Mock implements Declaration {}
 
 void main() {
   test('classFunctions returns functions only enclosed by passed class', () {
     final firstClass =
-        ScopedClassDeclaration(ClassType.generic, CompilationUnitMemberMock() as CompilationUnitMember);
+        ScopedClassDeclaration(ClassType.generic, CompilationUnitMemberMock());
     final secondClass =
-        ScopedClassDeclaration(ClassType.mixin, CompilationUnitMemberMock() as CompilationUnitMember);
+        ScopedClassDeclaration(ClassType.mixin, CompilationUnitMemberMock());
     final thirdClass = ScopedClassDeclaration(
       ClassType.extension,
-      CompilationUnitMemberMock() as CompilationUnitMember,
+      CompilationUnitMemberMock(),
     );
 
     final functions = [
       ScopedFunctionDeclaration(
         FunctionType.function,
-        DeclarationMock() as Declaration,
+        DeclarationMock(),
         null,
       ),
       ScopedFunctionDeclaration(
         FunctionType.constructor,
-        DeclarationMock() as Declaration,
+        DeclarationMock(),
         firstClass,
       ),
       ScopedFunctionDeclaration(
         FunctionType.method,
-        DeclarationMock() as Declaration,
+        DeclarationMock(),
         firstClass,
       ),
       ScopedFunctionDeclaration(
         FunctionType.constructor,
-        DeclarationMock() as Declaration,
+        DeclarationMock(),
         secondClass,
       ),
       ScopedFunctionDeclaration(
         FunctionType.method,
-        DeclarationMock() as Declaration,
+        DeclarationMock(),
         secondClass,
       ),
     ];

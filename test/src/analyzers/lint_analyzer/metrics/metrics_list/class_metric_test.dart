@@ -7,8 +7,7 @@ import 'package:dart_code_metrics/src/analyzers/lint_analyzer/models/scoped_clas
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-
-class CompilationUnitMemberMock extends Mock {}
+class CompilationUnitMemberMock extends Mock implements CompilationUnitMember {}
 
 class DocumentationMock extends Mock implements MetricDocumentation {}
 
@@ -33,20 +32,20 @@ void main() {
     final fourthNode = CompilationUnitMemberMock();
 
     final classes = [
-      ScopedClassDeclaration(ClassType.generic, firstNode as CompilationUnitMember),
-      ScopedClassDeclaration(ClassType.mixin, secondNode as CompilationUnitMember),
-      ScopedClassDeclaration(ClassType.extension, thirdNode as CompilationUnitMember),
+      ScopedClassDeclaration(ClassType.generic, firstNode),
+      ScopedClassDeclaration(ClassType.mixin, secondNode),
+      ScopedClassDeclaration(ClassType.extension, thirdNode),
     ];
 
-    expect(ClassMetricTest().nodeType(firstNode as AstNode, classes, []), equals('class'));
+    expect(ClassMetricTest().nodeType(firstNode, classes, []), equals('class'));
     expect(
-      ClassMetricTest().nodeType(secondNode as AstNode, classes, []),
+      ClassMetricTest().nodeType(secondNode, classes, []),
       equals('mixin'),
     );
     expect(
-      ClassMetricTest().nodeType(thirdNode as AstNode, classes, []),
+      ClassMetricTest().nodeType(thirdNode, classes, []),
       equals('extension'),
     );
-    expect(ClassMetricTest().nodeType(fourthNode as AstNode, classes, []), isNull);
+    expect(ClassMetricTest().nodeType(fourthNode, classes, []), isNull);
   });
 }

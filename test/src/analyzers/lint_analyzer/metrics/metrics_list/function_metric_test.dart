@@ -7,7 +7,7 @@ import 'package:dart_code_metrics/src/analyzers/lint_analyzer/models/scoped_func
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-class CompilationUnitMemberMock extends Mock implements CompilationUnitMember {}
+class CompilationUnitMemberMock extends Mock {}
 
 class DocumentationMock extends Mock implements MetricDocumentation {}
 
@@ -34,33 +34,33 @@ void main() {
     final sixthNode = CompilationUnitMemberMock();
 
     final functions = [
-      ScopedFunctionDeclaration(FunctionType.constructor, firstNode, null),
-      ScopedFunctionDeclaration(FunctionType.method, secondNode, null),
-      ScopedFunctionDeclaration(FunctionType.function, thirdNode, null),
-      ScopedFunctionDeclaration(FunctionType.getter, fourthNode, null),
-      ScopedFunctionDeclaration(FunctionType.setter, fifthNode, null),
+      ScopedFunctionDeclaration(FunctionType.constructor, firstNode as Declaration, null),
+      ScopedFunctionDeclaration(FunctionType.method, secondNode as Declaration, null),
+      ScopedFunctionDeclaration(FunctionType.function, thirdNode as Declaration, null),
+      ScopedFunctionDeclaration(FunctionType.getter, fourthNode as Declaration, null),
+      ScopedFunctionDeclaration(FunctionType.setter, fifthNode as Declaration, null),
     ];
 
     expect(
-      FunctionMetricTest().nodeType(firstNode, [], functions),
+      FunctionMetricTest().nodeType(firstNode as AstNode, [], functions),
       equals('constructor'),
     );
     expect(
-      FunctionMetricTest().nodeType(secondNode, [], functions),
+      FunctionMetricTest().nodeType(secondNode as AstNode, [], functions),
       equals('method'),
     );
     expect(
-      FunctionMetricTest().nodeType(thirdNode, [], functions),
+      FunctionMetricTest().nodeType(thirdNode as AstNode, [], functions),
       equals('function'),
     );
     expect(
-      FunctionMetricTest().nodeType(fourthNode, [], functions),
+      FunctionMetricTest().nodeType(fourthNode as AstNode, [], functions),
       equals('getter'),
     );
     expect(
-      FunctionMetricTest().nodeType(fifthNode, [], functions),
+      FunctionMetricTest().nodeType(fifthNode as AstNode, [], functions),
       equals('setter'),
     );
-    expect(FunctionMetricTest().nodeType(sixthNode, [], functions), isNull);
+    expect(FunctionMetricTest().nodeType(sixthNode as AstNode, [], functions), isNull);
   });
 }

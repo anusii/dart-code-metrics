@@ -13,7 +13,7 @@ import 'package:dart_code_metrics/src/analyzers/lint_analyzer/models/report.dart
 import 'package:mocktail/mocktail.dart';
 import 'package:source_span/source_span.dart';
 
-class _DeclarationMock extends Mock implements Declaration {}
+class _DeclarationMock extends Mock {}
 
 MetricValue<T> buildMetricValueStub<T extends num>({
   required String id,
@@ -70,7 +70,7 @@ Report buildReportStub({
   return Report(
     location:
         location ?? SourceSpanBase(SourceLocation(0), SourceLocation(0), ''),
-    declaration: _DeclarationMock(),
+    declaration: _DeclarationMock() as AstNode,
     metrics: [...metrics, ...defaultMetricValues],
   );
 }
@@ -93,7 +93,7 @@ Report buildFunctionRecordStub({
   return Report(
     location:
         location ?? SourceSpanBase(SourceLocation(0), SourceLocation(0), ''),
-    declaration: _DeclarationMock(),
+    declaration: _DeclarationMock() as AstNode,
     metrics: [...metrics, ...defaultMetricValues],
   );
 }

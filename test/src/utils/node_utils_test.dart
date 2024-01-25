@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
+import 'package:analyzer/dart/ast/syntactic_entity.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/source/line_info.dart';
 import 'package:dart_code_metrics/src/analyzers/lint_analyzer/models/internal_resolved_unit_result.dart';
@@ -7,9 +8,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-class AnnotatedNodeMock extends Mock implements AnnotatedNode {}
+class AnnotatedNodeMock extends Mock {}
 
-class CompilationUnitMock extends Mock implements CompilationUnit {}
+class CompilationUnitMock extends Mock {}
 
 class LineInfoMock extends Mock implements LineInfo {}
 
@@ -48,20 +49,21 @@ void main() {
     when(() => tokenMock.end).thenReturn(nodeEnd);
 
     final nodeMock = AnnotatedNodeMock();
-    when(() => nodeMock.firstTokenAfterCommentAndMetadata)
+    when(() => (nodeMock as AnnotatedNode).firstTokenAfterCommentAndMetadata)
         .thenReturn(tokenMock);
-    when(() => nodeMock.offset).thenReturn(nodeOffset);
-    when(() => nodeMock.end).thenReturn(nodeEnd);
+    when(() => (nodeMock as AnnotatedNode).offset).thenReturn(nodeOffset);
+    when(() => (nodeMock as AnnotatedNode).end).thenReturn(nodeEnd);
 
     final sourceStub = InternalResolvedUnitResult(
       sourcePath,
       '$preNodeCode$node$postNodeCode',
-      CompilationUnitMock(),
+      CompilationUnitMock() as CompilationUnit,
       lineInfoMock,
     );
 
     test('without comment or metadata', () {
-      final span = nodeLocation(node: nodeMock, source: sourceStub);
+      final span =
+          nodeLocation(node: nodeMock as SyntacticEntity, source: sourceStub);
 
       expect(span.sourceUrl?.toFilePath(), equals(p.normalize(sourcePath)));
 
@@ -77,7 +79,7 @@ void main() {
     });
     test('with comment or metadata', () {
       final span = nodeLocation(
-        node: nodeMock,
+        node: nodeMock as SyntacticEntity,
         source: sourceStub,
         withCommentOrMetadata: true,
       );

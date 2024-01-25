@@ -11,7 +11,7 @@ const metric1Id = 'metric-id1';
 const metric2Id = 'metric-id2';
 const metric3Id = 'metric-id3';
 
-class _DeclarationMock extends Mock implements Declaration {}
+class _DeclarationMock extends Mock {}
 
 void main() {
   group('Report', () {
@@ -46,7 +46,7 @@ void main() {
           Report(
             location: SourceSpanBase(SourceLocation(0), SourceLocation(0), ''),
             metrics: const [],
-            declaration: _DeclarationMock(),
+            declaration: _DeclarationMock() as AstNode,
           ).metricsLevel,
           equals(MetricValueLevel.none),
         );

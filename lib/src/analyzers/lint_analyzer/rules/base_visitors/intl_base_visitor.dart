@@ -2,6 +2,7 @@
 
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/syntactic_entity.dart';
+import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
@@ -33,7 +34,7 @@ abstract class IntlBaseVisitor extends GeneralizingAstVisitor<void> {
   @override
   void visitFieldDeclaration(FieldDeclaration node) {
     // ignore: deprecated_member_use
-    if (node.fields.type?.as<NamedType>()?.element!.displayName != 'String') {
+    if (node.fields.type?.as<NamedType>()?.name2.type != TokenType.STRING) {
       return;
     }
 

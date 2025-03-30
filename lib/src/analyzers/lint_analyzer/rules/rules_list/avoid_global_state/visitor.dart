@@ -10,7 +10,7 @@ class _Visitor extends RecursiveAstVisitor<void> {
     super.visitVariableDeclaration(node);
 
     // ignore: deprecated_member_use
-    if (node.declaredElement?.enclosingElement3 is CompilationUnitElement) {
+    if (node.declaredElement?.enclosingElement is CompilationUnitElement) {
       if (_isNodeValid(node)) {
         _declarations.add(node);
       }
